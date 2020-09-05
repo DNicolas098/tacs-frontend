@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import LoginButton from "components/LoginButton";
 
 export default function App() {
   return (
@@ -11,17 +12,15 @@ export default function App() {
               <Link to="/">Home</Link>
             </li>
             <li>
-              <Link to="/about">About</Link>
-            </li>
-            <li>
-              <Link to="/users">Users</Link>
+              <Link to="/login">Log In</Link>
             </li>
           </ul>
         </nav>
 
         <Switch>
-          <Route path="/about"></Route>
-          <Route path="/users"></Route>
+          <Route path="/login">
+            <LoginButton></LoginButton>
+          </Route>
           <Route path="/"></Route>
         </Switch>
       </div>
