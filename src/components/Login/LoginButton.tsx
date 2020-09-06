@@ -1,9 +1,10 @@
+import Button from "@material-ui/core/Button";
 import React from "react";
 import {
   GoogleLogin,
-  GoogleLogout,
   GoogleLoginResponse,
   GoogleLoginResponseOffline,
+  GoogleLogout
 } from "react-google-login";
 
 const CLIENT_ID =
@@ -67,6 +68,18 @@ export default class LoginButton extends React.Component<
             buttonText="Logout"
             onLogoutSuccess={this.logout}
             onFailure={this.handleLogoutFailure}
+            render={(renderProps) => (
+              <Button
+                disabled={renderProps.disabled}
+                onClick={renderProps.onClick}
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="secondary"
+              >
+                Cerrar sesion
+              </Button>
+            )}
           ></GoogleLogout>
         ) : (
           <GoogleLogin
@@ -76,14 +89,20 @@ export default class LoginButton extends React.Component<
             onFailure={this.handleLoginFailure}
             cookiePolicy={"single_host_origin"}
             responseType="code,token"
+            render={(renderProps) => (
+              <Button
+                disabled={renderProps.disabled}
+                onClick={renderProps.onClick}
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+              >
+                Ingresar con Google
+              </Button>
+            )}
           />
         )}
-        {this.state.accessToken ? (
-          <h5>
-            Access Token: <br />
-            <br /> {this.state.accessToken}
-          </h5>
-        ) : null}
       </div>
     );
   }
