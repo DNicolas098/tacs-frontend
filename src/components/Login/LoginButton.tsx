@@ -4,7 +4,7 @@ import {
   GoogleLogin,
   GoogleLoginResponse,
   GoogleLoginResponseOffline,
-  GoogleLogout,
+  GoogleLogout
 } from "react-google-login";
 
 const CLIENT_ID =
@@ -61,7 +61,7 @@ export default class LoginButton extends React.Component<
 
   render() {
     return (
-      <div>
+      <React.Fragment>
         {this.state.isLogined ? (
           <GoogleLogout
             clientId={CLIENT_ID}
@@ -103,7 +103,7 @@ export default class LoginButton extends React.Component<
             )}
           />
         )}
-      </div>
+      </React.Fragment>
     );
   }
 }

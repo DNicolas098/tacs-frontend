@@ -5,8 +5,8 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
-import logo from "assets/img/logo2.png";
 import mapFromArgentina from "assets/img/argentina.png";
+import logo from "assets/img/logo2.png";
 import LoginButton from "components/Login/LoginButton";
 import React from "react";
 
@@ -70,16 +70,20 @@ export default function LoginTemplateSideBar() {
               <LockOpenIcon></LockOpenIcon>
             </Avatar>
           </div>
-          <div style={{ marginBottom: "10px" }}>
+          <div style={{ marginBottom: "10px", width: "100%" }}>
             <LoginButton></LoginButton>
           </div>
-          <a
-            href="https://github.com/mesaglio/tp-tacs/"
-            target="_blank"
-            style={{ textDecoration: "none" }}
-          >
-            <Button variant="outlined">Seguinos en Github</Button>
-          </a>
+          <div style={{ width: "100%" }}>
+            <Button
+              variant="outlined"
+              fullWidth
+              href="https://github.com/mesaglio/tp-tacs/"
+              style={{ textDecoration: "none" }}
+              // TODO: Hacer que se abra en otra pestaña
+            >
+              Seguinos en Github
+            </Button>
+          </div>
         </div>
       </Grid>
     </Grid>
