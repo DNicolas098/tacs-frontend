@@ -2,9 +2,12 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
-import logo from "assets/img/logo.png";
+import logo from "assets/img/logo2.png";
 import LoginButton from "components/Login/LoginButton";
 import React from "react";
+import LockOpenIcon from "@material-ui/icons/LockOpen";
+import Avatar from "@material-ui/core/Avatar";
+import { Button } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,11 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
+    backgroundColor: theme.palette.text.disabled,
   },
 }));
 
@@ -42,11 +41,36 @@ export default function LoginTemplateSideBar() {
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
-      <Grid item xs={false} sm={4} md={7} className={classes.image} />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+      <Grid item xs={false} sm={4} md={8} className={classes.image} />
+      <Grid
+        item
+        xs={12}
+        sm={8}
+        md={4}
+        component={Paper}
+        elevation={6}
+        square
+        style={{ boxShadow: "0px 0px 129px 74px rgba(0,0,0,0.8)" }}
+      >
         <div className={classes.paper}>
-          <img src={logo}></img>
-          <LoginButton></LoginButton>
+          <div style={{ margin: "50px" }}>
+            <img src={logo}></img>
+          </div>
+          <div style={{ marginBottom: "10px" }}>
+            <Avatar className={classes.avatar}>
+              <LockOpenIcon></LockOpenIcon>
+            </Avatar>
+          </div>
+          <div style={{ marginBottom: "10px" }}>
+            <LoginButton></LoginButton>
+          </div>
+          <a
+            href="https://github.com/mesaglio/tp-tacs/"
+            target="_blank"
+            style={{ textDecoration: "none" }}
+          >
+            <Button variant="outlined">Seguinos en Github</Button>
+          </a>
         </div>
       </Grid>
     </Grid>

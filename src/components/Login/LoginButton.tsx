@@ -4,7 +4,7 @@ import {
   GoogleLogin,
   GoogleLoginResponse,
   GoogleLoginResponseOffline,
-  GoogleLogout
+  GoogleLogout,
 } from "react-google-login";
 
 const CLIENT_ID =
