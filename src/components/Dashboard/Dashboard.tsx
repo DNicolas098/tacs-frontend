@@ -19,7 +19,7 @@ import Chart from "components/Dashboard/Chart";
 import Deposits from "components/Dashboard/Deposits";
 import {
   mainListItems,
-  secondaryListItems
+  secondaryListItems,
 } from "components/Dashboard/listItems";
 import Orders from "components/Dashboard/Orders";
 import * as React from "react";
@@ -79,9 +79,9 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    width: theme.spacing(7),
+    width: theme.spacing(0),
     [theme.breakpoints.up("sm")]: {
-      width: theme.spacing(9),
+      width: theme.spacing(0),
     },
   },
   appBarSpacer: theme.mixins.toolbar,
@@ -157,7 +157,7 @@ export default function Dashboard() {
         </Toolbar>
       </AppBar>
       <Drawer
-        variant="permanent"
+        variant="persistent"
         classes={{
           paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
         }}
