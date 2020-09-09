@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import React from "react";
 import Box from "@material-ui/core/Box";
 import Collapse from "@material-ui/core/Collapse";
@@ -14,21 +14,32 @@ import Paper from "@material-ui/core/Paper";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import Container from "@material-ui/core/Container";
+import Grid from "@material-ui/core/Grid";
 
-const useRowStyles = makeStyles({
-  root: {
-    "& > *": {
-      borderBottom: "unset",
+const useRowStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      "& > *": {
+        borderBottom: "unset",
+      },
     },
-  },
-});
+    paper: {
+      padding: theme.spacing(2),
+    },
+    subDetalle: {
+      paddingLeft: "20px",
+    },
+  })
+);
 
-const useStyles = makeStyles((theme) => ({
-  container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
-  },
-}));
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    container: {
+      paddingTop: theme.spacing(4),
+      paddingBottom: theme.spacing(4),
+    },
+  })
+);
 
 function createData(
   idPartida: number,
@@ -36,7 +47,10 @@ function createData(
   estado: string,
   provincia: string,
   modoDeJuego: string,
-  partidaGanada: boolean | null
+  partidaGanada: boolean | null,
+  jugadores: string[],
+  ganador: string | null,
+  cantidadDeMunicipios: number
 ) {
   return {
     idPartida,
@@ -45,6 +59,9 @@ function createData(
     provincia,
     modoDeJuego,
     partidaGanada,
+    jugadores,
+    ganador,
+    cantidadDeMunicipios,
   };
 }
 
@@ -65,9 +82,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell component="th" scope="row">
-          {row.idPartida}
-        </TableCell>
+        <TableCell scope="row">{row.idPartida}</TableCell>
         <TableCell align="center">{row.fecha}</TableCell>
         <TableCell align="center">{row.estado}</TableCell>
         <TableCell align="center">{row.provincia}</TableCell>
@@ -76,11 +91,29 @@ function Row(props: { row: ReturnType<typeof createData> }) {
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box margin={1}>
-              <Typography variant="subtitle1" gutterBottom component="div">
-                Detalles de la partida
-              </Typography>
-            </Box>
+            <Grid container style={{ padding: "0px 20px 20px 20px" }}>
+              <Grid item xs={12}>
+                <Typography variant="h6">Más detalles</Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography variant="body1" gutterBottom>
+                  <div>Jugadores</div>
+                  {row.jugadores.map((jugador) => (
+                    <div className={classes.subDetalle}>
+                      <Typography variant="body1">{jugador}</Typography>
+                    </div>
+                  ))}
+                </Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography variant="body1">
+                  Ganador: {row.estado == "En Progreso" ? "-" : row.ganador}
+                </Typography>
+                <Typography variant="body1" gutterBottom>
+                  Cantidad de municipios: {row.cantidadDeMunicipios}
+                </Typography>
+              </Grid>
+            </Grid>
           </Collapse>
         </TableCell>
       </TableRow>
@@ -95,23 +128,32 @@ const rows = [
     "En Progreso",
     "Buenos Aires",
     "Normal",
-    null
+    null,
+    ["Cuario", "Cirif", "XMonad", "Annatar"],
+    null,
+    27
   ),
   createData(
     2,
     "08/09/2020 13:27",
     "Terminada",
-    "Buenos Aires",
+    "Cordoba",
     "Rapido",
-    null
+    null,
+    ["Cuario", "Cirif", "XMonad", "Annatar"],
+    "Cuario",
+    12
   ),
   createData(
     3,
     "06/09/2020 18:37",
     "Terminada",
-    "Buenos Aires",
+    "La Pampa",
     "Normal",
-    null
+    null,
+    ["Cuario", "Cirif", "XMonad", "Annatar"],
+    "Cirif",
+    17
   ),
   createData(
     4,
@@ -119,15 +161,21 @@ const rows = [
     "Cancelada",
     "Buenos Aires",
     "Extendido",
-    null
+    null,
+    ["Cuario", "Cirif", "XMonad", "Annatar"],
+    "XMonad",
+    30
   ),
   createData(
     5,
     "27/08/2020 14:14",
     "Terminada",
-    "Buenos Aires",
+    "Tucuman",
     "Normal",
-    null
+    null,
+    ["Cuario", "Cirif", "XMonad", "Annatar"],
+    "Annatar",
+    10
   ),
 ];
 

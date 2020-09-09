@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
     height: "100vh",
   },
   image: {
+    // TODO: Usar una collection propia 
     backgroundImage: "url(https://source.unsplash.com/collection/10417678)",
     backgroundRepeat: "no-repeat",
     backgroundColor:
@@ -72,7 +73,7 @@ export default function LoginTemplateSideBar() {
           </div>
           <div style={{ marginBottom: "10px", width: "100%" }}>
             <LoginButton></LoginButton>
-            // TODO: Ademas del login, agregar uno para el SignIn
+            {/* TODO: Ademas del login, agregar uno para el SignIn */}
           </div>
           <div style={{ width: "100%" }}>
             <Button
