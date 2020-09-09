@@ -72,6 +72,7 @@ export default function LoginTemplateSideBar() {
           </div>
           <div style={{ marginBottom: "10px", width: "100%" }}>
             <LoginButton></LoginButton>
+            // TODO: Ademas del login, agregar uno para el SignIn
           </div>
           <div style={{ width: "100%" }}>
             <Button
