@@ -1,6 +1,5 @@
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import React from "react";
-import Box from "@material-ui/core/Box";
 import Collapse from "@material-ui/core/Collapse";
 import IconButton from "@material-ui/core/IconButton";
 import Table from "@material-ui/core/Table";
@@ -15,6 +14,18 @@ import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
+import "date-fns";
+import DateFnsUtils from "@date-io/date-fns";
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from "@material-ui/pickers";
+import Input from "@material-ui/core/Input";
+import Chip from "@material-ui/core/Chip";
 
 const useRowStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -35,11 +46,38 @@ const useRowStyles = makeStyles((theme: Theme) =>
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
-      paddingTop: theme.spacing(4),
+      paddingTop: theme.spacing(2),
+      paddingLeft: theme.spacing(1),
+      paddingRight: theme.spacing(1),
       paddingBottom: theme.spacing(4),
+    },
+    paper: {
+      padding: theme.spacing(2),
+    },
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 120,
+    },
+    chips: {
+      display: "flex",
+      flexWrap: "wrap",
+    },
+    chip: {
+      margin: 2,
     },
   })
 );
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
 
 function createData(
   idPartida: number,
@@ -181,27 +219,153 @@ const rows = [
 
 export default function Partidas() {
   const classes = useStyles();
+  const [primerOrden, setPrimerOrden] = React.useState("");
+  const [segundoOrden, setSegundoOrden] = React.useState("");
+  const [fechaDesde, setFechaDesde] = React.useState<Date | null>(
+    new Date("2014-08-18T21:11:54")
+  );
+  const [fechaHasta, setFechaHasta] = React.useState<Date | null>(
+    new Date("2014-08-18T21:11:54")
+  );
+  const [estado, setEstado] = React.useState<string[]>([]);
+
+  const handlePrimerOrden = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setPrimerOrden(event.target.value as string);
+  };
+
+  const handleSegundoOrden = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setSegundoOrden(event.target.value as string);
+  };
+
+  const handleFechaDesde = (date: Date | null) => {
+    setFechaDesde(date);
+  };
+
+  const handleFechaHasta = (date: Date | null) => {
+    setFechaHasta(date);
+  };
+
+  const handleEstado = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setEstado(event.target.value as string[]);
+  };
+
   return (
     <Container maxWidth="lg" className={classes.container}>
-      <TableContainer component={Paper}>
-        <Table aria-label="collapsible table">
-          <TableHead>
-            <TableRow>
-              <TableCell />
-              <TableCell>ID Partida</TableCell>
-              <TableCell align="center">Fecha</TableCell>
-              <TableCell align="center">Estado</TableCell>
-              <TableCell align="center">Provincia</TableCell>
-              <TableCell align="center">Modo de juego</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => (
-              <Row key={row.idPartida} row={row} />
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <Grid container spacing={3} className={classes.paper}>
+        {/* TODO: Hacer que xs sea 12 para mobile */}
+        <Grid item xs={6}>
+          <Paper className={classes.paper}>
+            <Typography variant="h6">Ordenar</Typography>
+            <FormControl className={classes.formControl}>
+              <InputLabel id="primer-orden-label">Primero por</InputLabel>
+              <Select
+                labelId="primer-orden-label"
+                id="primer-orden"
+                value={primerOrden}
+                onChange={handlePrimerOrden}
+              >
+                <MenuItem value={10}>Fecha</MenuItem>
+                <MenuItem value={20}>Estado</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl className={classes.formControl}>
+              <InputLabel id="segundo-orden-label">Luego por</InputLabel>
+              <Select
+                labelId="segundo-orden-label"
+                id="rimer-orden"
+                value={segundoOrden}
+                onChange={handleSegundoOrden}
+              >
+                <MenuItem value={10}>Fecha</MenuItem>
+                <MenuItem value={20}>Estado</MenuItem>
+              </Select>
+            </FormControl>
+          </Paper>
+        </Grid>
+        <Grid item xs={6}>
+          <Paper className={classes.paper}>
+            <Typography variant="h6">Filtrar</Typography>
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <Grid container justify="space-around">
+                <KeyboardDatePicker
+                  disableToolbar
+                  variant="inline"
+                  format="MM/dd/yyyy"
+                  margin="normal"
+                  id="fecha-desde"
+                  label="Fecha desde"
+                  value={fechaDesde}
+                  onChange={handleFechaDesde}
+                  KeyboardButtonProps={{
+                    "aria-label": "change date",
+                  }}
+                />
+                <KeyboardDatePicker
+                  disableToolbar
+                  variant="inline"
+                  format="MM/dd/yyyy"
+                  margin="normal"
+                  id="fecha-hasta"
+                  label="Fecha hasta"
+                  value={fechaHasta}
+                  onChange={handleFechaHasta}
+                  KeyboardButtonProps={{
+                    "aria-label": "change date",
+                  }}
+                />
+              </Grid>
+            </MuiPickersUtilsProvider>
+            <FormControl className={classes.formControl}>
+              <InputLabel id="estado-label">Chip</InputLabel>
+              <Select
+                labelId="estado-label"
+                id="estado"
+                multiple
+                value={estado}
+                onChange={handleEstado}
+                input={<Input id="select-estado" />}
+                renderValue={(selected) => (
+                  <div className={classes.chips}>
+                    {(selected as string[]).map((value) => (
+                      <Chip
+                        key={value}
+                        label={value}
+                        className={classes.chip}
+                      />
+                    ))}
+                  </div>
+                )}
+                MenuProps={MenuProps}
+              >
+                <MenuItem value="En Progreso">En Progreso</MenuItem>
+                <MenuItem value="Terminada">Terminada</MenuItem>
+                <MenuItem value="Cancelada">Cancelada</MenuItem>
+              </Select>
+            </FormControl>
+          </Paper>
+        </Grid>
+        <Grid item xs={12}>
+          <TableContainer component={Paper}>
+            <Table aria-label="collapsible table">
+              <TableHead>
+                <TableRow>
+                  <TableCell />
+                  <TableCell>ID Partida</TableCell>
+                  <TableCell align="center">Fecha</TableCell>
+                  <TableCell align="center">Estado</TableCell>
+                  <TableCell align="center">Provincia</TableCell>
+                  <TableCell align="center">Modo de juego</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {rows.map((row) => (
+                  <Row key={row.idPartida} row={row} />
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Grid>
+      </Grid>
     </Container>
   );
 }
