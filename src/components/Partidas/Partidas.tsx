@@ -1,31 +1,33 @@
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import React from "react";
+import DateFnsUtils from "@date-io/date-fns";
+import Chip from "@material-ui/core/Chip";
 import Collapse from "@material-ui/core/Collapse";
+import Container from "@material-ui/core/Container";
+import FormControl from "@material-ui/core/FormControl";
+import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
+import Input from "@material-ui/core/Input";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import Paper from "@material-ui/core/Paper";
+import Select from "@material-ui/core/Select";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
+import TableFooter from "@material-ui/core/TableFooter";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
-import Paper from "@material-ui/core/Paper";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
-import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import Select from "@material-ui/core/Select";
-import "date-fns";
-import DateFnsUtils from "@date-io/date-fns";
 import {
-  MuiPickersUtilsProvider,
   KeyboardDatePicker,
+  MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
-import Input from "@material-ui/core/Input";
-import Chip from "@material-ui/core/Chip";
+import "date-fns";
+import React from "react";
+import CustomTablePagination from "./TablePagination";
 
 const useRowStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -215,6 +217,61 @@ const rows = [
     "Annatar",
     10
   ),
+  createData(
+    6,
+    "09/09/2020 15:23",
+    "En Progreso",
+    "Buenos Aires",
+    "Normal",
+    null,
+    ["Cuario", "Cirif", "XMonad", "Annatar"],
+    null,
+    27
+  ),
+  createData(
+    7,
+    "08/09/2020 13:27",
+    "Terminada",
+    "Cordoba",
+    "Rapido",
+    null,
+    ["Cuario", "Cirif", "XMonad", "Annatar"],
+    "Cuario",
+    12
+  ),
+  createData(
+    8,
+    "06/09/2020 18:37",
+    "Terminada",
+    "La Pampa",
+    "Normal",
+    null,
+    ["Cuario", "Cirif", "XMonad", "Annatar"],
+    "Cirif",
+    17
+  ),
+  createData(
+    9,
+    "03/09/2020 12:51",
+    "Cancelada",
+    "Buenos Aires",
+    "Extendido",
+    null,
+    ["Cuario", "Cirif", "XMonad", "Annatar"],
+    "XMonad",
+    30
+  ),
+  createData(
+    10,
+    "27/08/2020 14:14",
+    "Terminada",
+    "Tucuman",
+    "Normal",
+    null,
+    ["Cuario", "Cirif", "XMonad", "Annatar"],
+    "Annatar",
+    10
+  ),
 ];
 
 export default function Partidas() {
@@ -228,6 +285,8 @@ export default function Partidas() {
     new Date("2014-08-18T21:11:54")
   );
   const [estado, setEstado] = React.useState<string[]>([]);
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   const handlePrimerOrden = (event: React.ChangeEvent<{ value: unknown }>) => {
     setPrimerOrden(event.target.value as string);
@@ -249,6 +308,19 @@ export default function Partidas() {
     setEstado(event.target.value as string[]);
   };
 
+  const handleChangePage = (
+    event: React.MouseEvent<HTMLButtonElement> | null,
+    newPage: number
+  ) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
   return (
     <Container maxWidth="lg" className={classes.container}>
       <Grid container spacing={3} className={classes.paper}>
@@ -362,6 +434,17 @@ export default function Partidas() {
                   <Row key={row.idPartida} row={row} />
                 ))}
               </TableBody>
+              <TableFooter>
+                <TableRow>
+                  <CustomTablePagination
+                    rowsLength={rows.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onChangePage={handleChangePage}
+                    onChangeRowsPerPage={handleChangeRowsPerPage}
+                  />
+                </TableRow>
+              </TableFooter>
             </Table>
           </TableContainer>
         </Grid>
