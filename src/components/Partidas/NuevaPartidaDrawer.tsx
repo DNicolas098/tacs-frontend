@@ -8,6 +8,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import CloseIcon from "@material-ui/icons/Close";
 import clsx from "clsx";
 import React from "react";
+import NuevaPartidaStepper from "./NuevaPartidaStepper";
 
 const useStyles = makeStyles({
   list: {
@@ -25,7 +26,7 @@ interface Props {
   ) => (event: React.KeyboardEvent | React.MouseEvent) => void;
 }
 
-export default function NuevaPartida({ open, toggleDrawer }: Props) {
+export default function NuevaPartidaDrawer({ open, toggleDrawer }: Props) {
   const classes = useStyles();
 
   return (
@@ -33,12 +34,12 @@ export default function NuevaPartida({ open, toggleDrawer }: Props) {
       <div
         className={clsx(classes.list, [classes.fullList])}
         role="presentation"
-        onClick={toggleDrawer(false)}
         onKeyDown={toggleDrawer(false)}
       >
+        <NuevaPartidaStepper></NuevaPartidaStepper>
         <Divider />
         <List>
-          <ListItem button key={"Cancelar"}>
+          <ListItem button key={"Cancelar"} onClick={toggleDrawer(false)}>
             <ListItemIcon>
               <CloseIcon />
             </ListItemIcon>

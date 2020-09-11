@@ -2,7 +2,7 @@ import Fab from "@material-ui/core/Fab";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
 import React from "react";
-import NuevaPartida from "./NuevaPartida";
+import NuevaPartidaDrawer from "./NuevaPartidaDrawer";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -50,10 +50,10 @@ export default function NuevaPartidaFabButton() {
       >
         <AddIcon />
       </Fab>
-      <NuevaPartida
+      <NuevaPartidaDrawer
         open={state.drawerOpen}
         toggleDrawer={toggleDrawer}
-      ></NuevaPartida>
+      ></NuevaPartidaDrawer>
     </div>
   );
 }
