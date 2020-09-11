@@ -1,7 +1,7 @@
 import BarChartIcon from "@material-ui/icons/BarChart";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import HomeIcon from "@material-ui/icons/Home";
-import SportsEsportsIcon from "@material-ui/icons/SportsEsports";
+import MapIcon from "@material-ui/icons/Map";
 import ViewListIcon from "@material-ui/icons/ViewList";
 import Home from "components/Dashboard/Home";
 import Partidas from "components/Partidas/Partidas";
@@ -26,7 +26,7 @@ export const dashboardRoutes = [
     exact: true,
     sidebar: "Nueva Partida",
     main: () => <h2>Nueva Partida</h2>,
-    icon: () => <SportsEsportsIcon />,
+    icon: () => <MapIcon />,
   },
   {
     path: "/app/estadisticas",
