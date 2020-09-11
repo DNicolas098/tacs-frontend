@@ -23,12 +23,12 @@ import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import {
   KeyboardDatePicker,
-  MuiPickersUtilsProvider,
+  MuiPickersUtilsProvider
 } from "@material-ui/pickers";
 import "date-fns";
 import React from "react";
-import CustomTablePagination from "./TablePagination";
 import NuevaPartidaFabButton from "./NuevaPartidaFabButton";
+import CustomTablePagination from "./TablePagination";
 
 const useRowStyles = makeStyles((theme: Theme) =>
   createStyles({

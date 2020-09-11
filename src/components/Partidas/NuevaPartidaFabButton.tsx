@@ -2,6 +2,7 @@ import Fab from "@material-ui/core/Fab";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
 import React from "react";
+import NuevaPartida from "./NuevaPartida";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -20,13 +21,39 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function NuevaPartidaFabButton() {
   const classes = useStyles();
+  const [state, setState] = React.useState({
+    drawerOpen: false,
+  });
+
+  const toggleDrawer = (open: boolean) => (
+    event: React.KeyboardEvent | React.MouseEvent
+  ) => {
+    if (
+      event.type === "keydown" &&
+      ((event as React.KeyboardEvent).key === "Tab" ||
+        (event as React.KeyboardEvent).key === "Shift")
+    ) {
+      return;
+    }
+
+    setState({ ...state, ["drawerOpen"]: open });
+  };
 
   return (
     // FIXME: Al agregar el fab, aparecio la barra desplazamiento horizontal (parece que se agrego alguna especie de padding o margen)
     <div className={classes.root}>
-      <Fab color="primary" aria-label="add" className={classes.fab}>
+      <Fab
+        color="primary"
+        aria-label="add"
+        className={classes.fab}
+        onClick={toggleDrawer(true)}
+      >
         <AddIcon />
       </Fab>
+      <NuevaPartida
+        open={state.drawerOpen}
+        toggleDrawer={toggleDrawer}
+      ></NuevaPartida>
     </div>
   );
 }
