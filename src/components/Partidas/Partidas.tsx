@@ -28,6 +28,7 @@ import {
 import "date-fns";
 import React from "react";
 import CustomTablePagination from "./TablePagination";
+import NuevaPartidaFabButton from "./NuevaPartidaFabButton";
 
 const useRowStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -51,7 +52,7 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingTop: theme.spacing(2),
       paddingLeft: theme.spacing(1),
       paddingRight: theme.spacing(1),
-      paddingBottom: theme.spacing(4),
+      paddingBottom: theme.spacing(15),
     },
     paper: {
       padding: theme.spacing(2),
@@ -448,6 +449,7 @@ export default function Partidas() {
             </Table>
           </TableContainer>
         </Grid>
+        <NuevaPartidaFabButton></NuevaPartidaFabButton>
       </Grid>
     </Container>
   );
