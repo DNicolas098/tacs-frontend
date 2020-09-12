@@ -5,7 +5,7 @@ import AuthButton from './AuthButton';
 import { NuevoJWTModel } from "api/api";
 
 
-export default class LoginButton extends AuthButton {
+export default class SignUpButton extends AuthButton {
 
     renderButton(renderProps: { onClick: () => void, disabled?: boolean }): JSX.Element {
         return (
@@ -15,15 +15,15 @@ export default class LoginButton extends AuthButton {
                 type="submit"
                 fullWidth
                 variant="contained"
-                color="primary"
+                color="secondary"
               >
-                Ingresar con Google
+                Registrate con Google
               </Button>
         )
     }
 
     doBackendAuthentication(idToken: string): Promise<NuevoJWTModel> {
-        return this.authApiClient.logUserIn(idToken);
+        return this.authApiClient.signUserUp(idToken);
     }
 
 }

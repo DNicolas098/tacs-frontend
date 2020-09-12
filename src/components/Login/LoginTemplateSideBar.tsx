@@ -8,6 +8,7 @@ import LockOpenIcon from "@material-ui/icons/LockOpen";
 import mapFromArgentina from "assets/img/argentina.png";
 import logo from "assets/img/logo2.png";
 import LoginButton from "components/Login/LoginButton";
+import SignUpButton from "components/Login/SignUpButton";
 import React from "react";
 
 const useStyles = makeStyles((theme) => ({
@@ -15,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     height: "100vh",
   },
   image: {
-    // TODO: Usar una collection propia 
+    // TODO: Usar una collection propia
     backgroundImage: "url(https://source.unsplash.com/collection/10417678)",
     backgroundRepeat: "no-repeat",
     backgroundColor:
@@ -38,7 +39,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function LoginTemplateSideBar() {
+export interface LoginTemplateSideBarProps {
+  flagLoggedIn: () => void;
+}
+
+export default function LoginTemplateSideBar(props: LoginTemplateSideBarProps) {
   const classes = useStyles();
 
   return (
@@ -64,7 +69,7 @@ export default function LoginTemplateSideBar() {
       >
         <div className={classes.paper}>
           <div style={{ margin: "50px" }}>
-            <img src={logo}></img>
+            <img src={logo} alt="Wololo logo"></img>
           </div>
           <div style={{ marginBottom: "10px" }}>
             <Avatar className={classes.avatar}>
@@ -72,8 +77,10 @@ export default function LoginTemplateSideBar() {
             </Avatar>
           </div>
           <div style={{ marginBottom: "10px", width: "100%" }}>
-            <LoginButton></LoginButton>
-            {/* FIXME: Ademas del login, agregar uno para el SignIn */}
+            <LoginButton flagLoggedIn={props.flagLoggedIn} />
+          </div>
+          <div style={{ marginBottom: "10px", width: "100%" }}>
+            <SignUpButton flagLoggedIn={props.flagLoggedIn} />
           </div>
           <div style={{ width: "100%" }}>
             <Button
