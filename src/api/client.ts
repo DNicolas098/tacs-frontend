@@ -38,7 +38,7 @@ export class BaseWololoApiClient {
     }
 
     public userIsLoggedIn() {
-        return this.getRefreshToken() === undefined;
+        return this.getRefreshToken() !== undefined;
     }
 
     public async refreshToken() {
@@ -109,6 +109,14 @@ export class WololoAuthApiClient extends BaseWololoApiClient {
         return requestResult;
     }
 
+    private deleteAccessToken() {
+        window.localStorage.removeItem(BaseWololoApiClient.ACCESS_TOKEN_KEY);
+    }
+
+    private deleteRefreshToken() {
+        window.localStorage.removeItem(BaseWololoApiClient.REFRESH_TOKEN_KEY);
+    }
+
     public async logUserIn(googleIdToken: string) {
 
         const auth: GoogleAuthModel = {
@@ -129,6 +137,11 @@ export class WololoAuthApiClient extends BaseWololoApiClient {
         return await this.doAuthRequest(
             async (options) => await this.authApi.singUp(auth, options)
         );
+    }
+
+    public logUserOut() {
+        this.deleteAccessToken();
+        this.deleteRefreshToken();
     }
 
 }
