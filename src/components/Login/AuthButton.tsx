@@ -6,13 +6,13 @@ import {
 } from "react-google-login";
 
 import { WololoAuthApiClient } from "api/client";
-import { NuevoJWTModel } from "api/api";
+import { NuevoJWTModel, UsuarioModel } from "api/api";
 
 const CLIENT_ID =
   "475854452552-js6cnac0fjktpav4dcp570860l7etar8.apps.googleusercontent.com";
 
 export interface AuthButtonProps {
-  flagLoggedIn: () => void;
+  flagLoggedIn: (user: UsuarioModel) => void;
 };
 
 export default abstract class AuthButton extends React.Component<AuthButtonProps, {}> {
@@ -32,7 +32,7 @@ export default abstract class AuthButton extends React.Component<AuthButtonProps
     const idToken = loginResponse.tokenObj.id_token;
 
     this.doBackendAuthentication(idToken)
-      .then(_ => this.props.flagLoggedIn())
+      .then(nuevoJwtModel => this.props.flagLoggedIn(nuevoJwtModel.usuario))
       .catch(_ => this.handleBackendFailure());
 
   }

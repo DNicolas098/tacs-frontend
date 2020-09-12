@@ -1,5 +1,4 @@
 import AppBar from "@material-ui/core/AppBar";
-import Badge from "@material-ui/core/Badge";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
@@ -14,12 +13,12 @@ import Typography from "@material-ui/core/Typography";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import MenuIcon from "@material-ui/icons/Menu";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import NotificationsIcon from "@material-ui/icons/Notifications";
 import clsx from "clsx";
 import React from "react";
 import { Link, Route } from "react-router-dom";
 import { dashboardRoutes as routes } from "components/Routes/DashboardRoutes";
 import { WololoAuthApiClient } from "api/client";
+import { UsuarioModel } from "api/api";
 
 const drawerWidth = 240;
 
@@ -96,6 +95,7 @@ const useStyles = makeStyles((theme) => ({
 
 export interface DashboardProps {
   flagLoggedOut: () => void;
+  currentUser?: UsuarioModel;
 }
 
 
@@ -143,18 +143,23 @@ export default function Dashboard(props: DashboardProps) {
           </IconButton>
           <Typography
             component="h1"
-            variant="h6"
+            variant="h5"
             color="inherit"
             noWrap
             className={classes.title}
           >
             Wololo Dashboard
           </Typography>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
+          {props.currentUser &&
+          <Typography
+            component="h2"
+            variant="h6"
+            color="inherit"
+            noWrap
+          >
+            {props.currentUser.nombreDeUsuario}
+          </Typography>
+          }
         </Toolbar>
       </AppBar>
       <Drawer

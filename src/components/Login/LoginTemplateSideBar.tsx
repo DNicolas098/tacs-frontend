@@ -10,6 +10,7 @@ import logo from "assets/img/logo2.png";
 import LoginButton from "components/Login/LoginButton";
 import SignUpButton from "components/Login/SignUpButton";
 import React from "react";
+import { UsuarioModel } from "api/api";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export interface LoginTemplateSideBarProps {
-  flagLoggedIn: () => void;
+  flagLoggedIn: (user: UsuarioModel) => void;
 }
 
 export default function LoginTemplateSideBar(props: LoginTemplateSideBarProps) {
@@ -88,7 +89,7 @@ export default function LoginTemplateSideBar(props: LoginTemplateSideBarProps) {
               fullWidth
               href="https://github.com/mesaglio/tp-tacs/"
               style={{ textDecoration: "none" }}
-              // TODO: Hacer que se abra en otra pestaña
+              target="_blank"
             >
               Seguinos en Github
             </Button>
