@@ -13,11 +13,13 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import MenuIcon from "@material-ui/icons/Menu";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import clsx from "clsx";
 import React from "react";
 import { Link, Route } from "react-router-dom";
 import { dashboardRoutes as routes } from "components/Routes/DashboardRoutes";
+import { WololoAuthApiClient } from "api/client";
 
 const drawerWidth = 240;
 
@@ -91,10 +93,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Dashboard() {
+
+export interface DashboardProps {
+  flagLoggedOut: () => void;
+}
+
+
+const authApiClient = new WololoAuthApiClient();
+
+
+export default function Dashboard(props: DashboardProps) {
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(true);
+
+  const doLogOut = () => {
+    authApiClient.logUserOut();
+    props.flagLoggedOut();
+  }
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -166,6 +182,10 @@ export default function Dashboard() {
               </ListItem>
             </Link>
           ))}
+          <ListItem button onClick={doLogOut} >
+            <ListItemIcon><ExitToAppIcon /></ListItemIcon>
+            <ListItemText primary="Cerrar Sesión" />
+          </ListItem>
         </List>
       </Drawer>
       <main className={classes.content}>

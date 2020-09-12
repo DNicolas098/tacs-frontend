@@ -1,5 +1,4 @@
 import BarChartIcon from "@material-ui/icons/BarChart";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import HomeIcon from "@material-ui/icons/Home";
 import MapIcon from "@material-ui/icons/Map";
 import ViewListIcon from "@material-ui/icons/ViewList";
@@ -33,11 +32,5 @@ export const dashboardRoutes = [
     sidebar: "Estadísticas",
     main: () => <h2>Estadisticas</h2>,
     icon: () => <BarChartIcon />,
-  },
-  {
-    path: "/app/logout",
-    sidebar: "Cerrar Sesión",
-    main: () => <h2>Logout</h2>,
-    icon: () => <ExitToAppIcon />,
   },
 ];
